@@ -14,6 +14,7 @@ import com.trms.models.Reimbursement;
 public class UserServiceImpl implements UserService {
 	EmplDAO emplDao = DaoFactory.geEmplDAO() ;
 	ReimbursementDAO reimDAO = DaoFactory.getReimbursementDAO();
+	
 	public Employee logIn(String username, String password) throws IncorrectCredentialsException {
 		//String pass = "abcd";
 		//String userName = "Rustem";
@@ -56,7 +57,13 @@ public class UserServiceImpl implements UserService {
 		return reimbursements;
 	}
 	
-	
+	public Employee getUserById(long id) {
+		
+		Employee user = emplDao.getById(id);
+		
+		return user;
+		
+	}
 	
 
 

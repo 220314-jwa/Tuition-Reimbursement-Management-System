@@ -23,8 +23,8 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 
 	public long create(Reimbursement newReimbursement) {
 
-		String sql = "INSERT INTO Reimbursement(id,submitter_id,event_type_id,status_id,"
-				+ "event_date,cost,description,location,submitted_at)" + "Values(default,?,?,?,?,?,?,?,?)";
+		String sql = "INSERT INTO reimbursement(id,submitter_id,event_type_id,status_id,"
+				+ "event_date,cost,description,location,submitted_at)" + "Values(default,?,?,?,?,?,?,?,?);";
 
 		try {
 
@@ -61,13 +61,37 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 	}
 
 	public Reimbursement getById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		String sql = "SELECT * FROM reimbursement e where e.id= ?;";
+		Reimbursement request = null;
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+			preparedStatement.setLong(1,id);
+			// execute the command, and save the count of rows affected:
+			ResultSet resultSet = preparedStatement.executeQuery();
+			if (resultSet.next()) {
+				request = ReimbursamentDAOImpl.parseResultSet(resultSet);
+				//System.out.println(empl);
+				// now, we've created a pet Java object based on the info from our table:
+			} else {
+				System.out.println("Reimbursement request with id - " + id +" - does not exist!");
+				// return null in this case:
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return request;
+	
 	}
 
 	public List<Reimbursement> getAllByEmployee(Employee employee) {
+		
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		String sql = "Select * from Reimbursement where id = ?;";
+		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, employee.getId());
@@ -82,6 +106,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return reimbursements;
 
 	}
@@ -108,12 +133,41 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 	}
 
 	public void update(Reimbursement updatedObj) {
-		// TODO Auto-generated method stub
+		
+		String sql = "UPDATE reimbursement SET submitter_id = ?,event_type_id=?,status_id=?,event_date=?,cost=?,description=?,location=?,submitted_at=? where id = ?;";
+    	
+		try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        	// fill in the template:
+        	preparedStatement.setLong(1,updatedObj.getSubmitterId());
+        	preparedStatement.setLong(2,updatedObj.getEventTypeId());
+        	preparedStatement.setLong(3,updatedObj.getStatusId());
+        	preparedStatement.setTimestamp(4,new Timestamp(updatedObj.getEventDate().getTime()));
+        	preparedStatement.setLong(5,updatedObj.getCost());
+        	preparedStatement.setString(6,updatedObj.getDescription());
+        	preparedStatement.setString(7,updatedObj.getLocation());
+        	preparedStatement.setTimestamp(8,new Timestamp(System.currentTimeMillis()));
+        	preparedStatement.setLong(9,updatedObj.getRequestId());
+        	// return a count of how many records were updated
+        	int count = preparedStatement.executeUpdate();
+        	
+        	if(count != 1) {
+        		System.out.println("Oops! Something went wrong with the update!");
+        	}else {
+        		System.out.println("Reimbursement request with id "+updatedObj.getRequestId()+" was updated!");
+        	}
+    		
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
 
 	}
+	
 	public List<Reimbursement> getReimbursementsByStatus(String status){
+		
 		List<Reimbursement> reimbursements = new ArrayList<>();
 		String sql = "Select * from Reimbursement where status_id = ?;";
+		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1,1);
@@ -128,18 +182,53 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return reimbursements;
 		
 	}
+	
 	public void delete(Reimbursement objToDelete) {
-		// TODO Auto-generated method stub
+		
+		String sql = "DELETE FROM reimbursement WHERE id = ?;";
+    	
+		try {
+    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    		preparedStatement.setLong(1, objToDelete.getRequestId());
+    		int count = preparedStatement.executeUpdate();
+    		if (count != 1) {
+    			System.out.println("Something went wrong with the deletion of reimbursement request!");
+    		}
+    		else {
+    			System.out.println("Reimbursement request with id"+objToDelete.getRequestId()+" was deleted");
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}	
 
 	}
 
 	@Override
 	public List<Reimbursement> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<Reimbursement> requests = new ArrayList<Reimbursement>();
+
+		String sql = "SELECT * FROM reimbursement;";
+		
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            // get the result from our query:
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
+            while(resultSet.next()) {
+                Reimbursement request = ReimbursamentDAOImpl.parseResultSet(resultSet);
+                requests.add(request);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return requests;
+        
 	}
 
 }

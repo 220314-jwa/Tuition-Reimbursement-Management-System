@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.trms.data.EmplDAO;
@@ -91,19 +92,73 @@ public class EmplDAOImpl implements EmplDAO {
 	}
 
 	public List<Employee> getAll() {
-
-		return null;
+		 
+		List<Employee> users = new ArrayList<Employee>();
+		String sql = "SELECT * FROM employee;";
+		
+		try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            // get the result from our query:
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
+            while(resultSet.next()) {
+                Employee user = EmplDAOImpl.parseResultSet(resultSet);
+                users.add(user);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return users;
+		
 	}
 
 	public void update(Employee updatedObj) {
-
+		
+		String sql = "update employee set first_name = ?,second_name=?,password=?,email=?,manager_id=?,dept_id=?,username=? where empl_id = ?;";
+    	
+		try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        	
+        	preparedStatement.setString(1,updatedObj.getFirstName());
+        	preparedStatement.setString(2,updatedObj.getLastName());
+        	preparedStatement.setString(3,updatedObj.getPassword());
+        	preparedStatement.setString(4,updatedObj.getEmail());
+        	preparedStatement.setLong(5,updatedObj.getDeptId());
+        	preparedStatement.setLong(6,updatedObj.getManagerId());
+        	preparedStatement.setLong(7,updatedObj.getDeptId());
+        	preparedStatement.setLong(8,updatedObj.getId());
+      
+        	// return a count of how many records were updated
+        	int count = preparedStatement.executeUpdate();
+        	if(count != 1) {
+        		System.out.println("Oops! Something went wrong with the update of employee!");
+        	}
+        	else {
+        		System.out.println("Employee with id "+ updatedObj.getId()+ " updated!");
+        	}
+        	
+    		
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
 	}
 
 	public void delete(Employee objToDelete) {
-
+		String sql = "DELETE FROM employee WHERE empl_id = ?;";
+    	try {
+    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    		preparedStatement.setLong(1, objToDelete.getId());
+    		int count = preparedStatement.executeUpdate();
+    		if (count != 1) {
+    			System.out.println("Something went wrong with the deletion of employee!");
+    		}
+    		else {
+    			System.out.println("Employee with id"+objToDelete.getId()+"deleted");
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}
 	}
-
-
 
 	private static Employee parseResultSet(ResultSet resultSet) {
 
@@ -125,7 +180,6 @@ public class EmplDAOImpl implements EmplDAO {
 
 		return employee;
 	}
-
 
 	public Employee getByEmail(String email) {
 		String sql = "Select * from Employee e where e.email= ?;";

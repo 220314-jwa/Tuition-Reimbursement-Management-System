@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.trms.data.EventDAO;
@@ -53,8 +54,10 @@ public class EventDAOImpl implements EventDAO{
 	}
 
 	public Event getById(long id) {
+		
 		String sql = "select * from event where id =?;";
 		Event event = null;
+		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setLong(1,id);
@@ -72,9 +75,11 @@ public class EventDAOImpl implements EventDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		return event;
 		
 	}
+	
 	private static Event parseResultSet(ResultSet resultSet) {
 
 		Event event = new Event();
@@ -91,18 +96,68 @@ public class EventDAOImpl implements EventDAO{
 	}
 
 	public List<Event> getAll() {
-		// TODO Auto-generated method stub
-		return null;
+
+		List<Event> events = new ArrayList<Event>();
+
+        String sql = "SELECT * FROM event;";
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            // get the result from our query:
+            ResultSet resultSet = preparedStatement.executeQuery();
+            // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
+            while(resultSet.next()) {
+                Event event = EventDAOImpl.parseResultSet(resultSet);
+                events.add(event);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+        return events;
+	
 	}
 
 	public void update(Event updatedObj) {
-		// TODO Auto-generated method stub
-		
+		// we create the template for the SQL string:
+    	String sql = "UPDATE event SET event_name = ? where id = ?;";
+    	try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        	// fill in the template:
+        	preparedStatement.setString(1,updatedObj.getEventTypeName());
+        	preparedStatement.setLong(2,updatedObj.getEventTypeId());
+
+        	// return a count of how many records were updated
+        	int count = preparedStatement.executeUpdate();
+        	if(count != 1) {
+        		System.out.println("Oops! Something went wrong with the update!");
+        	}else {
+        		System.out.println("Event with id "+updatedObj.getEventTypeId()+" was updated!");
+        	}
+        	
+    		
+    	} catch(SQLException e) {
+    		e.printStackTrace();
+    	}
 	}
 
 	public void delete(Event objToDelete) {
-		// TODO Auto-generated method stub
+		
+		String sql = "DELETE FROM event WHERE id = ?;";
+    	try {
+    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    		preparedStatement.setLong(1, objToDelete.getEventTypeId());
+    		int count = preparedStatement.executeUpdate();
+    		if (count != 1) {
+    			System.out.println("Something went wrong with the deletion of event with id "+objToDelete.getEventTypeId());
+    		}
+    		else {
+    			System.out.println("Event with id"+objToDelete.getEventTypeId()+" was deleted");
+    		}
+    	} catch (SQLException e) {
+    		e.printStackTrace();
+    	}	
 		
 	}
 
+	
 }
