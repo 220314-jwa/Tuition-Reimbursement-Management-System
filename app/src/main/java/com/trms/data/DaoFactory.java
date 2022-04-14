@@ -5,6 +5,7 @@ import com.trms.data.Impl.EmplDAOImpl;
 import com.trms.data.Impl.EventDAOImpl;
 import com.trms.data.Impl.ReimbursamentDAOImpl;
 import com.trms.data.Impl.StatusDAOImpl;
+import com.trms.models.Event;
 
 public class DaoFactory {
 
@@ -13,6 +14,8 @@ public class DaoFactory {
 	    private static StatusDAO statusDAO = null;
 	    private static ReimbursementDAO reimbursementDAO = null;
 	    private static  EmplDAO emplDAO = null ;
+	    private static Event event = null;
+	    private static long eventId = 0;
 	    private DaoFactory() {
 
 	    }
@@ -22,6 +25,18 @@ public class DaoFactory {
 	        	deptDAO = new DeptDAOImpl();
 	        }
 	        return deptDAO;
+	    }
+	    
+	    public static long getEventId() {
+	        
+	        return eventId;
+	    }
+	    
+	    public static Event getEvent() {
+	    	if(event==null) {
+	    		event = new Event();
+	    	}
+	    	return event;
 	    }
 	    public static EventDAO getEventDAO() {
 	    	if (eventDAO == null) {

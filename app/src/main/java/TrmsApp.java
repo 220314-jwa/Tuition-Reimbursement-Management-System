@@ -4,23 +4,30 @@ import com.trms.data.EmplDAO;
 import com.trms.data.EventDAO;
 import com.trms.data.ReimbursementDAO;
 import com.trms.data.StatusDAO;
+import com.trms.exceptions.IncorrectCredentialsException;
 import com.trms.models.Department;
 import com.trms.models.Employee;
 import com.trms.models.Event;
 import com.trms.models.Reimbursement;
 import com.trms.models.Status;
+import com.trms.services.UserService;
+import com.trms.services.UserServiceImpl;
 
+import controllers.UserController;
 import io.javalin.Javalin;
-
+import io.javalin.http.HttpCode;
+import static io.javalin.apibuilder.ApiBuilder.*;
 public class TrmsApp {
 
 	public static void main(String[] args) {
 		
-		Javalin app = Javalin.create();
+		Javalin app = Javalin.create(config -> {
+		    config.enableCorsForAllOrigins();
+		});
 		app.start(8085);
-
+		UserService userService = new UserServiceImpl();
 		
-		app.post("/depts", ctx -> {
+		/*app.post("/depts", ctx -> {
 			Department dept = ctx.bodyAsClass(com.trms.models.Department.class);
 			System.out.println(dept);
 			// get the DAO from the factory:
@@ -113,6 +120,41 @@ public class TrmsApp {
 			ctx.json(resultUser);
 
 		});
+		app.post("/login",ctx ->{
+			try {
+			Employee user = ctx.bodyAsClass(com.trms.models.Employee.class);
+			String username = user.getUserName();
+			String password = user.getPassword();
+			System.out.println(username);
+			System.out.println(password);
+			Employee employee = userService.logIn(username, password);
+			ctx.json(employee);
+			System.out.println(ctx.body());}
+			catch(IncorrectCredentialsException e) {
+				ctx.status(HttpCode.UNAUTHORIZED);
+			}
+			
+			
+
+			//System.out.println(ctx.queryParam("username"));
+			//System.out.println(ctx.queryParam("password"));
+		});
+*/
+		// cleaning up my main method by switching to app.routes and moving logic to controllers
+				app.routes(() -> {
+					// all paths starting with /pets
+					path("users", () -> {
+						post(UserController::registerUser);
+						path("{id}", () -> {
+							get(UserController::getUserById);
+						});
+					});
+
+					// all paths starting with /auth
+					path("auth", () -> {
+						post(UserController::logIn);
+					});
+				});
 
 		
 	}

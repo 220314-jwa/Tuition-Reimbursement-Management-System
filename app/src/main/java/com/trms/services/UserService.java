@@ -25,5 +25,7 @@ public interface UserService {
 	public List<Reimbursement> viewReimbursements(Employee employee);
 	
 	public List<Reimbursement> getReimbursementsByStatus(String status);
+	
+	public Employee getUserById(long id);
 }
 

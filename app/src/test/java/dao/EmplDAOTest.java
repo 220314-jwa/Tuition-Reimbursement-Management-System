@@ -17,8 +17,10 @@ import com.trms.data.EmplDAO;
 import com.trms.models.Employee;
 
 public class EmplDAOTest {
+	
 	private EmplDAO emplDAO = DaoFactory.geEmplDAO();
 	private String testUser = "RustemA";
+	private long idNewUser = 0;
 	
 	@Test
 	public void getByIdDoesNotExist() {
@@ -32,7 +34,6 @@ public class EmplDAOTest {
 		assertEquals(testUser, user.getUserName());
 		//System.out.print(user.getUserName());
 	}
-	
 	
 	@Test
 	public void getByUsernameDoesNotExist() {
@@ -52,8 +53,8 @@ public class EmplDAOTest {
 		newUser.setPassword("password");
 		newUser.setUserName("Romans");
 		
-		long id = emplDAO.create(newUser);
-		assertNotEquals(0, id);
+		idNewUser = emplDAO.create(newUser);
+		assertNotEquals(0, idNewUser);
 	}
 	
 	@Test
@@ -74,7 +75,7 @@ public class EmplDAOTest {
 	
 	@Test
 	public void getByIdExists() {
-		int id = 3;
+		int id = 23;
 
 		Employee user = emplDAO.getById(id);
 
@@ -86,12 +87,22 @@ public class EmplDAOTest {
 		assertNotNull(emplDAO.getAll());
 	}
 
-	/*@Test
+	@Test
 	public void updateUserExists() {
+		Employee newUser = new Employee();
+		newUser.setFirstName("Rom");
+		newUser.setEmail("Rom@gmail.com");
+		newUser.setLastName("Romanov");
+		newUser.setDeptId(1);
+		newUser.setManagerId(2);
+		newUser.setPassword("password");
+		newUser.setUserName("Romans");
+		newUser.setId(idNewUser);
 		assertDoesNotThrow(() -> {
-			emplDAO.update(testUser);
+			emplDAO.update(newUser);
 		});
-	}*/
+	}
+	
 	@Test
 	public void updateUserDoesNotExist() {
 		assertThrows(SQLException.class, () -> {
@@ -99,13 +110,22 @@ public class EmplDAOTest {
 		});
 	}
 
-	/*@Test
+	@Test
 	@Order(2)
 	public void deleteUserExists() {
+		Employee newUser = new Employee();
+		newUser.setFirstName("Rom");
+		newUser.setEmail("Rom@gmail.com");
+		newUser.setLastName("Romanov");
+		newUser.setDeptId(1);
+		newUser.setManagerId(2);
+		newUser.setPassword("password");
+		newUser.setUserName("Romans");
+		newUser.setId(idNewUser);
 		assertDoesNotThrow(() -> {
-			emplDAO.delete(testNewUser);
+			emplDAO.delete(newUser);
 		});
-	}*/
+	}
 
 	@Test
 	public void deleteUserDoesNotExist() {
