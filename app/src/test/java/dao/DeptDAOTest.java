@@ -6,12 +6,9 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.sql.SQLException;
-
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-
 import com.trms.data.DaoFactory;
 import com.trms.data.DeptDAO;
 import com.trms.models.Department;
