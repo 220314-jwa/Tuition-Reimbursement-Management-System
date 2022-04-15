@@ -92,7 +92,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		String sql = "SELECT * FROM reimbursement r INNER JOIN status s ON r.status_id=s.id INNER JOIN event e on r.event_type_id = e.id  WHERE submitter_id =? ;";
 		
-		try {
+		try(Connection connect = connection) {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
 			preparedStatement.setLong(1, employee.getId());
 			// get the result from our query:

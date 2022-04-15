@@ -54,7 +54,8 @@ function loggedInNavBar() {
                         <ul class="navbar-nav">
                         <li class="nav-item">
                         <a class="nav-link" id ="profilePage">
-                        <i class="fa-regular fa-user">${fullName}</i>
+                        <i class="fa-regular fa-user"></i>
+                        ${fullName}
                         </a>
                         </li>
                         <li class="nav-item">
