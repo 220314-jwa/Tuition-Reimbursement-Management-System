@@ -13,6 +13,8 @@ import com.trms.models.Status;
 import com.trms.services.UserService;
 import com.trms.services.UserServiceImpl;
 
+import controllers.EventController;
+import controllers.ReimbursementController;
 import controllers.UserController;
 import io.javalin.Javalin;
 import io.javalin.http.HttpCode;
@@ -154,6 +156,19 @@ public class TrmsApp {
 					path("auth", () -> {
 						post(UserController::logIn);
 					});
+					
+					path("events",() ->{
+						get(EventController::getEvents);
+					});
+					
+					path("createReimbursement",() ->{
+						post(ReimbursementController::createReimbursement);
+					});
+					
+					path("myReimbursements/{id}",() ->{
+						get(UserController::viewReimbursements);
+					});
+					
 				});
 
 		

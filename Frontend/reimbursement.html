@@ -12,21 +12,55 @@
     <script
       src="https://kit.fontawesome.com/29eedf10e2.js"
       crossorigin="anonymous"></script>
+      <script src="reimbursement.js"></script>
   </head>
 
   <body>
         <div class="container-fluid">
             <nav class = "navbar navbar-expand-lg navbar-dark bg-dark"> </nav>
-            <div class="card">
+            <div class="card mt-5 center text-center">
                 <div class="card-body">
-                  Reimbursement
+                    Add a reimbursement request
                 </div>
               </div>
-            <div id="content">
-
+            <div id="contentReimbursement mt-5">
+              <form class="row g-3">
+                <div class="col-md-6">
+                  <label for="events" class="form-label">Event:</label>
+                  <select name="selectEvents" id="selectEvents" class="form-select" >    </select>
+                </div>
+                <div class="col-md-6">
+                  <label for="eventDate" class="form-label">Event  date:</label>
+                  <input type="date" class="form-control" id="eventDate">
+                </div>
+                <div class="col-md-6">
+                  <label for="cost" class="form-label">Cost:</label>
+                  <input type="number" class="form-control" id="cost" placeholder="0">
+                </div>
+                <div class="col-md-6">
+                  <label for="location" class="form-label">Location:</label>
+                  <input type="text" class="form-control" id="location" placeholder="Chicago">
+                </div>
+                <div class="col-md-6">
+                  <label for="description form-label">Description:</label>
+                  <div class="form-group">
+                    <textarea class="form-control rounded-0" id="description" rows="3"></textarea>
+                  </div>
+                </div>
+                
+                <div class="col-md-6">
+                  <label for="status" class="form-label">Status:</label>
+                  <input type="text" class="form-control" id="status" readonly>
+                </div>
+          
+                <div class="col-12">
+                  <button type="button" class="btn btn-primary" id="createReimbursementButton">Create a request</button>
+                </div>
+              </form>
             </div>
         </div>
-  <script src="main.js"></script>
+  <script src = "main.js"></script>
+  <script src="reimbursement.js" defer="defer"></script>
  </body>
 
 </html>

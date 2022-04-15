@@ -28,7 +28,7 @@ private long  statusId;
 	
 	@Test
 	public void getByIdExists() {
-		long id = 8;
+		long id = 1;
 
 		Status status = statusDAO.getById(id);
 
