@@ -1,11 +1,13 @@
 package controllers;
 
 import java.sql.SQLException;
+import java.util.List;
 import java.util.Map;
 
 import com.trms.exceptions.EmplAlreadyExistsException;
 import com.trms.exceptions.IncorrectCredentialsException;
 import com.trms.models.Employee;
+import com.trms.models.Reimbursement;
 import com.trms.services.UserService;
 import com.trms.services.UserServiceImpl;
 
@@ -15,7 +17,7 @@ import io.javalin.http.HttpCode;
 public class UserController {
 	private static UserService userServ = new UserServiceImpl();
 	
-	public static void logIn(Context ctx) {
+		public static void logIn(Context ctx) {
 		Map<String,String> credentials = ctx.bodyAsClass(Map.class);
 		String username = credentials.get("username");
 		String password = credentials.get("password");
@@ -30,7 +32,7 @@ public class UserController {
 		}
 	}
 	
-	// POST to /users
+		// POST to /users
 		public static void registerUser(Context ctx) {
 			Employee newUser = ctx.bodyAsClass(Employee.class);
 			
@@ -60,7 +62,14 @@ public class UserController {
 			}
 		}
 
-
+		public static void viewReimbursements(Context ctx){
+			
+			long id = Long.parseLong(ctx.pathParam("id"));
+			List<Reimbursement> requests = userServ.viewReimbursements(userServ.getUserById(id));
+			System.out.println(id);
+			System.out.println(requests);
+			ctx.json(requests);
+		}
 
 
 }

@@ -90,7 +90,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 	public List<Reimbursement> getAllByEmployee(Employee employee) {
 		
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
-		String sql = "Select * from Reimbursement where id = ?;";
+		String sql = "SELECT * FROM reimbursement r INNER JOIN status s ON r.status_id=s.id  WHERE submitter_id =? ;";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);

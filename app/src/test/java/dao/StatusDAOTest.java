@@ -6,7 +6,6 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-
 import java.sql.SQLException;
 
 import org.junit.Test;
@@ -29,7 +28,7 @@ private long  statusId;
 	
 	@Test
 	public void getByIdExists() {
-		long id = 8;
+		long id = 1;
 
 		Status status = statusDAO.getById(id);
 

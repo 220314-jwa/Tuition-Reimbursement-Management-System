@@ -12,11 +12,9 @@ import java.util.Date;
 
 import org.junit.Test;
 import org.junit.jupiter.api.Order;
-
 import com.trms.data.DaoFactory;
 import com.trms.data.ReimbursementDAO;
 import com.trms.models.Reimbursement;
-
 public class ReimbursementDAOTest {
 private ReimbursementDAO reimDAO = DaoFactory.getReimbursementDAO();
 private Reimbursement reimbursement = new Reimbursement();	

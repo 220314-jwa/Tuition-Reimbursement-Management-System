@@ -41,12 +41,13 @@ public class UserServiceImpl implements UserService {
 		long emplId = emplDao.create(newEmployee);
 		//System.out.println(emplId);
 		return emplDao.getById(emplId);
+		//return emplId;
 	}
 	
 	public List<Reimbursement> viewReimbursements(Employee employee) {
 		
 		List<Reimbursement> reimbursements = reimDAO.getAllByEmployee(employee);
-		
+		System.out.println(employee);
 		return reimbursements;
 		
 	}

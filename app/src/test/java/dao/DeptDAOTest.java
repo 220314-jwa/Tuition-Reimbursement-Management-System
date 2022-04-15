@@ -13,9 +13,6 @@ import com.trms.data.DaoFactory;
 import com.trms.data.DeptDAO;
 import com.trms.models.Department;
 
-
-
-
 public class DeptDAOTest {
 	
 	private DeptDAO deptDAO = DaoFactory.getDeptDao();
