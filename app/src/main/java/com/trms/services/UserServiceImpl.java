@@ -24,9 +24,11 @@ public class UserServiceImpl implements UserService {
 				System.out.println("You logged in!");
 			}else {
 				System.out.println("Your password is wrong!");
+				throw new IncorrectCredentialsException();
 			}
 		}else {
 			System.out.println("User does not exist!");
+			throw new IncorrectCredentialsException();
 		}
 		return  user;
 	}

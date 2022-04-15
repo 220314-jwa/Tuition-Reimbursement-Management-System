@@ -57,10 +57,10 @@ async function getAllMyRequests() {
           "/" + date.getFullYear();
         row.innerHTML = `
                   <td>${element.requestId}</td>
-                  <td>${statusName}</td>
+                  <td>${element.status}</td>
                   <td>${element.location}</td>
                   <td>${element.description}</td>
-                  <td>${element.eventTypeId}</td> 
+                  <td>${element.event}</td> 
                   <td>${date}</td>
                   <td>${element.cost}</td>
                   <td>${submitDate}</td>`;

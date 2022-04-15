@@ -90,7 +90,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 	public List<Reimbursement> getAllByEmployee(Employee employee) {
 		
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
-		String sql = "SELECT * FROM reimbursement r INNER JOIN status s ON r.status_id=s.id  WHERE submitter_id =? ;";
+		String sql = "SELECT * FROM reimbursement r INNER JOIN status s ON r.status_id=s.id INNER JOIN event e on r.event_type_id = e.id  WHERE submitter_id =? ;";
 		
 		try {
 			PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -125,6 +125,8 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 			reimbursement.setDescription(resultSet.getString(7));
 			reimbursement.setLocation(resultSet.getString(8));
 			reimbursement.setSubmittedAt(resultSet.getTimestamp(9));
+			reimbursement.setStatus(resultSet.getString("status_name"));
+			reimbursement.setEvent(resultSet.getString("event_name"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

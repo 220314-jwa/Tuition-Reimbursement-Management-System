@@ -25,6 +25,11 @@ async function logIn() {
             loggedInNavBar();
             location.replace('main.html');
             console.log("Status" + httpResp.status + "finisged");
+        } else {
+            //let inputUsername = document.getElementById('username');
+            // inputUsername.setAttribute('style', 'border-color: bold; border:2px;');
+            // console.log(username);
+            alert("Your password or username is wrong`");
         }
     }
     catch (err) {
