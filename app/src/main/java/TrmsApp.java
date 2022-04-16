@@ -13,6 +13,7 @@ import com.trms.models.Status;
 import com.trms.services.UserService;
 import com.trms.services.UserServiceImpl;
 
+import controllers.DepartmentController;
 import controllers.EventController;
 import controllers.ReimbursementController;
 import controllers.UserController;
@@ -159,6 +160,10 @@ public class TrmsApp {
 					
 					path("events",() ->{
 						get(EventController::getEvents);
+					});
+					
+					path("departments",() ->{
+						get(DepartmentController::getDepartments);
 					});
 					
 					path("createReimbursement",() ->{
