@@ -42,7 +42,7 @@ async function createRequest() {
     const credentials = {
       eventTypeId: selectEvent.options[selectEvent.selectedIndex].value,
       statusId: 1,
-      submitterId: 23,
+      submitterId: sessionStorage.getItem('Auth-Token'),
       eventDate: document.getElementById('eventDate').value,
       cost: document.getElementById('cost').value,
       location: document.getElementById('location').value,
