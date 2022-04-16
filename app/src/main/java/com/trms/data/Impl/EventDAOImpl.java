@@ -24,9 +24,10 @@ public class EventDAOImpl implements EventDAO{
 		String sql = "Insert into Event(id,event_name)" +
 					 "Values(default,?);";
 		
-		try {
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
 			
-			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+			
 			
 			preparedStatement.setString(1, newEvent.getEventTypeName());
 			
