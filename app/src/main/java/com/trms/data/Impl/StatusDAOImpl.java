@@ -24,8 +24,8 @@ public class StatusDAOImpl implements StatusDAO {
 		String sql = "Insert into Status(id,status_name)" + 
 					"Values(default,?);";
 		
-		try {
-		PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
+		
 		
 		preparedStatement.setString(1,newStatus.getStatusName());
 		
@@ -53,8 +53,8 @@ public class StatusDAOImpl implements StatusDAO {
 		String sql = "SELECT * FROM status s where s.id = ?; ";
 		Status status = null;
 		
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+			
 			preparedStatement.setLong(1,id);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -77,8 +77,8 @@ public class StatusDAOImpl implements StatusDAO {
 		List<Status> statuses = new ArrayList<Status>();
 
         String sql = "SELECT * FROM status;";
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try(Connection con = connection; PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+           
             // get the result from our query:
             ResultSet resultSet = preparedStatement.executeQuery();
             // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
@@ -97,8 +97,8 @@ public class StatusDAOImpl implements StatusDAO {
 	public void update(Status updatedObj) {
 		// we create the template for the SQL string:
     	String sql = "UPDATE status SET status_name = ? where id = ?;";
-    	try {
-        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    	try(Connection con = connection;PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        	
         	// fill in the template:
         	preparedStatement.setString(1,updatedObj.getStatusName());
         	preparedStatement.setLong(2,updatedObj.getStatusId());
@@ -121,8 +121,9 @@ public class StatusDAOImpl implements StatusDAO {
 	public void delete(Status objToDelete) {
 		
 		String sql = "DELETE FROM status where id = ?;";
-    	try {
-    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    	try(Connection con = connection;	
+    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+    	
     		preparedStatement.setLong(1, objToDelete.getStatusId());
     		int count = preparedStatement.executeUpdate();
     		if (count != 1) {

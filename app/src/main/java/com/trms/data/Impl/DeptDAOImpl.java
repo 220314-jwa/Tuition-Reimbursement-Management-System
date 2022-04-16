@@ -24,9 +24,10 @@ public class DeptDAOImpl implements DeptDAO {
 
 		// create a basic string to store sql query for creating department
 		String sql = "insert into Department(id,dept_name)" + "values(default,?);";
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql,
-					PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql,
+				PreparedStatement.RETURN_GENERATED_KEYS);) {
+			
 			//preparedStatement.setLong(1, newDept.getId());
 			preparedStatement.setString(1, newDept.getDeptName());
 			//preparedStatement.setLong(2, newDept.getHeadId());
@@ -58,8 +59,9 @@ public class DeptDAOImpl implements DeptDAO {
 	public Department getById(long id) {
 		String sql = "select * from department d where d.id = ?; ";
 		Department dept = null;
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+			
 			preparedStatement.setLong(1,id);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -83,8 +85,9 @@ public class DeptDAOImpl implements DeptDAO {
 		 List<Department> depts = new ArrayList<Department>();
 
 	        String sql = "SELECT * FROM department;";
-	        try {
-	            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+	        try(Connection con = connection;
+	        		 PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+	           
 	            // get the result from our query:
 	            ResultSet resultSet = preparedStatement.executeQuery();
 	            // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
@@ -118,8 +121,9 @@ public class DeptDAOImpl implements DeptDAO {
 	
 		// we create the template for the SQL string:
     	String sql = "update department set dept_name = ? where id = ?;";
-    	try {
-        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    	try(Connection con = connection;
+    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        	
         	// fill in the template:
         	preparedStatement.setString(1,updatedObj.getDeptName());
         	preparedStatement.setLong(2,updatedObj.getId());
@@ -142,8 +146,9 @@ public class DeptDAOImpl implements DeptDAO {
 	public void delete(Department objToDelete) {
 		
 		String sql = "delete from department where id = ?;";
-    	try {
-    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+    	try(Connection con = connection;
+    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+    		
     		preparedStatement.setLong(1, objToDelete.getId());
     		int count = preparedStatement.executeUpdate();
     		if (count != 1) {
