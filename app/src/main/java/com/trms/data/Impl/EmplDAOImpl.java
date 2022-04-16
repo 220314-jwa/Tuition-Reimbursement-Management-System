@@ -28,12 +28,11 @@ public class EmplDAOImpl implements EmplDAO {
 		String sql = "insert into Employee (empl_id, first_name, second_name, password, email, manager_id,dept_id,username)"
 				+ "values (default, ?, ?, ?, ?, ?,?,?);";
 
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql,
-				PreparedStatement.RETURN_GENERATED_KEYS);) {
+		try {
 			// create a prepared statement, we pass in the sql command
 			// also the flag "RETURN_GENERATED_KEYS" so we can get that id that is generated
-			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,
+					PreparedStatement.RETURN_GENERATED_KEYS);
 			// set the fields:
 			preparedStatement.setString(1, newObj.getFirstName());
 			preparedStatement.setString(2, newObj.getLastName());
@@ -72,9 +71,8 @@ public class EmplDAOImpl implements EmplDAO {
 	public Employee getById(long id) {
 		String sql = "Select * from Employee e where e.empl_id= ?;";
 		Employee empl = null;
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-			
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setLong(1,id);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -98,9 +96,8 @@ public class EmplDAOImpl implements EmplDAO {
 		List<Employee> users = new ArrayList<Employee>();
 		String sql = "SELECT * FROM employee;";
 		
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-            
+		try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             // get the result from our query:
             ResultSet resultSet = preparedStatement.executeQuery();
             // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
@@ -119,9 +116,8 @@ public class EmplDAOImpl implements EmplDAO {
 		
 		String sql = "update employee set first_name = ?,second_name=?,password=?,email=?,manager_id=?,dept_id=?,username=? where empl_id = ?;";
     	
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-        	
+		try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
         	
         	preparedStatement.setString(1,updatedObj.getFirstName());
         	preparedStatement.setString(2,updatedObj.getLastName());
@@ -149,9 +145,8 @@ public class EmplDAOImpl implements EmplDAO {
 
 	public void delete(Employee objToDelete) {
 		String sql = "DELETE FROM employee WHERE empl_id = ?;";
-    	try(Connection con = connection;
-    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-    		
+    	try {
+    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
     		preparedStatement.setLong(1, objToDelete.getId());
     		int count = preparedStatement.executeUpdate();
     		if (count != 1) {
@@ -189,9 +184,8 @@ public class EmplDAOImpl implements EmplDAO {
 	public Employee getByEmail(String email) {
 		String sql = "Select * from Employee e where e.email= ?;";
 		Employee empl = null;
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-			
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1,email);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -214,9 +208,8 @@ public class EmplDAOImpl implements EmplDAO {
 	public Employee getByUsername(String username) {
 		String sql = "Select * from Employee e where e.username= ?;";
 		Employee empl = null;
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);){
-			
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setString(1,username);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
