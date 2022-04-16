@@ -105,15 +105,22 @@ function loggedOutNavBar() {
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link" id="loginpage">
-            Login<i class="fa-solid fa-arrow-right-to-bracket"></i>
+            Login <i class="fa-solid fa-arrow-right-to-bracket"></i>
           </a>
         </li>
+        <li class="nav-item">
+        <a class="nav-link" id="registerPage">
+          Register <i class="fa-solid fa-address-card"></i>
+        </a>
+      </li>
       </ul>
     </div>
   </div>`;
 
     let logInLink = document.getElementById('loginpage');
     logInLink.addEventListener('click', openLoginPage);
+    let registerLink = document.getElementById('registerPage');
+    registerLink.addEventListener('click', openRegisterPage);
 }
 
 function openLoginPage() {
@@ -122,6 +129,9 @@ function openLoginPage() {
 
 }
 
+function openRegisterPage() {
+    location.replace('register.html');
+}
 function openCreateRequestPage() {
 
     window.location.href = 'reimbursement.html';
