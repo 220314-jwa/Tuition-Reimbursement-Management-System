@@ -24,10 +24,9 @@ public class EventDAOImpl implements EventDAO{
 		String sql = "Insert into Event(id,event_name)" +
 					 "Values(default,?);";
 		
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);) {
+		try {
 			
-			
+			PreparedStatement preparedStatement = connection.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS);
 			
 			preparedStatement.setString(1, newEvent.getEventTypeName());
 			
@@ -59,9 +58,8 @@ public class EventDAOImpl implements EventDAO{
 		String sql = "select * from event where id =?;";
 		Event event = null;
 		
-		try(Connection con = connection;
-				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-			
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
 			preparedStatement.setLong(1,id);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -102,9 +100,8 @@ public class EventDAOImpl implements EventDAO{
 		List<Event> events = new ArrayList<Event>();
 
         String sql = "SELECT * FROM event;";
-        try(Connection con = connection;
-        		PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-            
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
             // get the result from our query:
             ResultSet resultSet = preparedStatement.executeQuery();
             // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
@@ -123,9 +120,8 @@ public class EventDAOImpl implements EventDAO{
 	public void update(Event updatedObj) {
 		// we create the template for the SQL string:
     	String sql = "UPDATE event SET event_name = ? where id = ?;";
-    	try(Connection con = connection;
-    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-        	
+    	try {
+        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
         	// fill in the template:
         	preparedStatement.setString(1,updatedObj.getEventTypeName());
         	preparedStatement.setLong(2,updatedObj.getEventTypeId());
@@ -147,9 +143,8 @@ public class EventDAOImpl implements EventDAO{
 	public void delete(Event objToDelete) {
 		
 		String sql = "DELETE FROM event WHERE id = ?;";
-    	try(Connection con = connection;
-    			PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
-    		
+    	try {
+    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
     		preparedStatement.setLong(1, objToDelete.getEventTypeId());
     		int count = preparedStatement.executeUpdate();
     		if (count != 1) {
