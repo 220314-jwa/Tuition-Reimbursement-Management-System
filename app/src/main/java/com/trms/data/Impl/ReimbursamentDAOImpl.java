@@ -26,10 +26,8 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		String sql = "INSERT INTO reimbursement(id,submitter_id,event_type_id,status_id,"
 				+ "event_date,cost,description,location,submitted_at)" + "Values(default,?,?,?,?,?,?,?,?);";
 
-		try {
-
-			PreparedStatement preparedStatement = connection.prepareStatement(sql,
-					PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;PreparedStatement preparedStatement = connection.prepareStatement(sql,
+				PreparedStatement.RETURN_GENERATED_KEYS);) {
 
 			preparedStatement.setLong(1, newReimbursement.getSubmitterId());
 			preparedStatement.setLong(2, newReimbursement.getEventTypeId());
@@ -65,8 +63,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		String sql = "SELECT * FROM reimbursement e where e.id= ?;";
 		Reimbursement request = null;
 		
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql,PreparedStatement.RETURN_GENERATED_KEYS);) {
+			
 			preparedStatement.setLong(1,id);
 			// execute the command, and save the count of rows affected:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -92,8 +91,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		ArrayList<Reimbursement> reimbursements = new ArrayList<>();
 		String sql = "SELECT * FROM reimbursement r INNER JOIN status s ON r.status_id=s.id INNER JOIN event e on r.event_type_id = e.id  WHERE submitter_id =? ;";
 		
-		try(Connection connect = connection) {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+			
 			preparedStatement.setLong(1, employee.getId());
 			// get the result from our query:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -106,6 +106,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		
 		
 		return reimbursements;
 
@@ -138,8 +139,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		
 		String sql = "UPDATE reimbursement SET submitter_id = ?,event_type_id=?,status_id=?,event_date=?,cost=?,description=?,location=?,submitted_at=? where id = ?;";
     	
-		try {
-        	PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+        
         	// fill in the template:
         	preparedStatement.setLong(1,updatedObj.getSubmitterId());
         	preparedStatement.setLong(2,updatedObj.getEventTypeId());
@@ -170,8 +172,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		List<Reimbursement> reimbursements = new ArrayList<>();
 		String sql = "Select * from Reimbursement where status_id = ?;";
 		
-		try {
-			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+			
 			preparedStatement.setLong(1,1);
 			// get the result from our query:
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -193,8 +196,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 		
 		String sql = "DELETE FROM reimbursement WHERE id = ?;";
     	
-		try {
-    		PreparedStatement preparedStatement = connection.prepareStatement(sql);
+		try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+    		
     		preparedStatement.setLong(1, objToDelete.getRequestId());
     		int count = preparedStatement.executeUpdate();
     		if (count != 1) {
@@ -216,8 +220,9 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 
 		String sql = "SELECT * FROM reimbursement;";
 		
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        try(Connection con = connection;
+				PreparedStatement preparedStatement = connection.prepareStatement(sql);) {
+            
             // get the result from our query:
             ResultSet resultSet = preparedStatement.executeQuery();
             // because the resultSet has multiple pets in it, we don't just want an if-statement. We want a loop:
