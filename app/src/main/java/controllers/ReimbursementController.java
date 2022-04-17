@@ -16,4 +16,13 @@ public class ReimbursementController {
 					ctx.json(newRequest);
 	
 			}
+			
+			public static void requestAction(Context ctx) {
+				
+				Reimbursement requestToUpdate = ctx.bodyAsClass(Reimbursement.class);
+				//long id = requestToUpdate.getRequestId();
+				reimService.updateReimbursement(requestToUpdate);
+				ctx.json(requestToUpdate);
+			}
+			
 }

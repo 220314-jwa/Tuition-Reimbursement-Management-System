@@ -155,6 +155,10 @@ public class TrmsApp {
 						post(ReimbursementController::createReimbursement);
 					});
 					
+					path("RequestAction",() ->{
+						put(ReimbursementController::requestAction);
+					});
+					
 					path("myReimbursements/{id}",() ->{
 						get(UserController::viewReimbursements);
 					});
