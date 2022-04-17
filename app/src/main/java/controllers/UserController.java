@@ -70,6 +70,14 @@ public class UserController {
 			System.out.println(requests);
 			ctx.json(requests);
 		}
+		
+		public static void viewMyPendingTasks(Context ctx) {
+			
+			long id = Long.parseLong(ctx.pathParam("id"));
+			List<Reimbursement> requests = userServ.viewMyPendingTasks(id);
+			ctx.json(requests);
+			
+		}
 
 
 }

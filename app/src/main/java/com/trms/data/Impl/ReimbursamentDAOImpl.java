@@ -127,6 +127,7 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
 			reimbursement.setSubmittedAt(resultSet.getTimestamp(9));
 			reimbursement.setStatus(resultSet.getString("status_name"));
 			reimbursement.setEvent(resultSet.getString("event_name"));
+			reimbursement.setSubmitter(resultSet.getString("second_name") + " " + resultSet.getString("first_name"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -231,6 +232,30 @@ public class ReimbursamentDAOImpl implements ReimbursementDAO {
         
         return requests;
         
+	}
+
+	@Override
+	public List<Reimbursement> getByManagerId(long id) {
+		
+		String sql = "SELECT * FROM reimbursement r INNER JOIN employee e on r.submitter_id = e.empl_id INNER JOIN status s ON r.status_id=s.id INNER JOIN event ev ON r.event_type_id = ev.id WHERE e.manager_id= ?;";
+		List<Reimbursement> requests = new ArrayList<Reimbursement>();
+		
+		try {
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			preparedStatement.setLong(1,id);
+			// execute the command, and save the count of rows affected:
+			ResultSet resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+                Reimbursement request = ReimbursamentDAOImpl.parseResultSet(resultSet);
+                requests.add(request);
+            }
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return requests;
+	
 	}
 
 }
