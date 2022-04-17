@@ -39,6 +39,7 @@ async function getAllMyPendingTasks() {
                   <th scope ="col">Cost</th>
                   <th scope = "col"> Submitted at</th>
                   <th scope = "col">Submitter</th>
+                  <th scope = "col">Action</th>
                 </tr>`;
       tableRequest.appendChild(thead);
       let tbody = document.createElement('tbody');
@@ -53,7 +54,7 @@ async function getAllMyPendingTasks() {
           "/" + (date.getMonth() + 1) +
           "/" + date.getFullYear();
         row.innerHTML = `
-                    <td>${element.requestId}</td>
+                    <td >${element.requestId}</td>
                     <td>${element.status}</td>
                     <td>${element.location}</td>
                     <td>${element.description}</td>
@@ -61,7 +62,9 @@ async function getAllMyPendingTasks() {
                     <td>${date}</td>
                     <td>${element.cost}</td>
                     <td>${submitDate}</td>
-                    <td>${element.submitter}</td>`;
+                    <td>${element.submitter}</td>
+                    <td><button type="button" class="btn btn-outline-primary btn-sm" id ="approveRequest">Approve</button>
+                    <button type="button" class="btn btn-outline-danger btn-sm" id ="rejectRequest">Reject</button></td>`;
 
         // add the row to the table
         tbody.appendChild(row);
