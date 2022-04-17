@@ -29,13 +29,13 @@ checkLogin().catch(error => {
 function loggedInNavBar() {
 
     let fullName = sessionStorage.getItem('FullName');
-
+    let = userId = sessionStorage.getItem('Auth-Token');
     nav.innerHTML = `<div class="container-fluid d-flex flex-row">
                         <div class="d-flex flex-row justify-content-start">
                         <a class="navbar-brand" href="#">
                         <i class="fa-solid fa-money-check-dollar">TRMS </i>
                         </a>
-                        <ul class="navbar-nav">
+                        <ul class="navbar-nav" id ="leftNavBar">
                         <li class="nav-item">
                         <a class="nav-link" href="#">Features</a>
                         </li>
@@ -45,17 +45,13 @@ function loggedInNavBar() {
                         <li class="nav-item">
                         <a class="nav-link"  id = "viewMyRequests" > My reimbursements </a>
                         </li>
-                        <li class="nav-item">
-                        <a class="nav-link" href="#">Contact us</a>
-                        </li>
                         </ul>
                         </div>
                         <div class="d-flex flex-row justify-content-end">
                         <ul class="navbar-nav">
                         <li class="nav-item">
                         <a class="nav-link" id ="profilePage">
-                        <i class="fa-regular fa-user"></i>
-                        ${fullName}
+                        <i class="fa-regular fa-user"></i> ${fullName}
                         </a>
                         </li>
                         <li class="nav-item">
@@ -65,7 +61,17 @@ function loggedInNavBar() {
                         </div>
                         </div>`;
 
-    //console.log(nav);
+    if (userId == 1) {
+        let navBar = document.getElementById('leftNavBar');
+        let liItem = document.createElement('li');
+        liItem.setAttribute('class', 'nav-item');
+        liItem.innerHTML = `<li class="nav-item">
+            <a class="nav-link" id ="pendingTasks" href="#">My pending tasks</a>
+            </li>`
+        navBar.appendChild(liItem);
+        let pendingAnchor = document.getElementById('pendingTasks');
+        pendingAnchor.addEventListener('click', openMyPendingTasksPage)
+    }
 
     logOutBtn = document.getElementById('logoutButton');
     logOutBtn.addEventListener('click', logOut);
@@ -85,6 +91,10 @@ function logOut() {
     loggedInUser = null;
     loggedOutNavBar();
     location.replace('login.html');
+}
+
+function openMyPendingTasksPage() {
+    location.replace('myPendingTasks.html');
 }
 
 function loggedOutNavBar() {

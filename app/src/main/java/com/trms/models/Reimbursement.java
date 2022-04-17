@@ -15,9 +15,10 @@ public class Reimbursement {
 	private Date submittedAt;
 	private String status;
 	private String event;
+	private String submitter;
 	
 	public Reimbursement(long requestId, long submitterId, long eventTypeId, long statusId, Date eventDate, long cost,
-			String description, String location, Date submittedAt,String status,String event) {
+			String description, String location, Date submittedAt,String status,String event,String submitter) {
 		this.requestId = requestId;
 		this.submitterId = submitterId;
 		this.eventTypeId = eventTypeId;
@@ -29,6 +30,7 @@ public class Reimbursement {
 		this.submittedAt = submittedAt;
 		this.status = status;
 		this.event= event;
+		this.submitter = submitter;
 	}
 	
 	public Reimbursement() {
@@ -43,6 +45,7 @@ public class Reimbursement {
 		this.submittedAt = new Date();
 		this.status = "";
 		this.event = " ";
+		this.submitter = "";
 	}
 
 	public long getRequestId() {
@@ -55,6 +58,14 @@ public class Reimbursement {
 
 	public long getSubmitterId() {
 		return submitterId;
+	}
+
+	public String getSubmitter() {
+		return submitter;
+	}
+
+	public void setSubmitter(String submitter) {
+		this.submitter = submitter;
 	}
 
 	public String getEvent() {

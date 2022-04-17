@@ -159,6 +159,10 @@ public class TrmsApp {
 						get(UserController::viewReimbursements);
 					});
 					
+					path("myPendingTasks/{id}",() ->{
+						get(UserController::viewMyPendingTasks);
+					});
+					
 				});
 
 		

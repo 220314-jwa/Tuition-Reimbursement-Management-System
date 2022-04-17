@@ -27,5 +27,7 @@ public interface UserService {
 	public List<Reimbursement> getReimbursementsByStatus(String status);
 	
 	public Employee getUserById(long id);
+	
+	public List<Reimbursement> viewMyPendingTasks(long id);
 }
 

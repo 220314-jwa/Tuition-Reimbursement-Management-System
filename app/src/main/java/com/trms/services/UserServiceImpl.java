@@ -67,6 +67,14 @@ public class UserServiceImpl implements UserService {
 		return user;
 		
 	}
+
+	@Override
+	public List<Reimbursement> viewMyPendingTasks(long id) {
+
+		List<Reimbursement> reimbursements = reimDAO.getByManagerId(id);
+		
+		return reimbursements;
+	}
 	
 
 
