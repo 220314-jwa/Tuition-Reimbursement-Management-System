@@ -1,24 +1,9 @@
-import com.trms.data.DaoFactory;
-import com.trms.data.DeptDAO;
-import com.trms.data.EmplDAO;
-import com.trms.data.EventDAO;
-import com.trms.data.ReimbursementDAO;
-import com.trms.data.StatusDAO;
-import com.trms.exceptions.IncorrectCredentialsException;
-import com.trms.models.Department;
-import com.trms.models.Employee;
-import com.trms.models.Event;
-import com.trms.models.Reimbursement;
-import com.trms.models.Status;
-import com.trms.services.UserService;
-import com.trms.services.UserServiceImpl;
 
 import controllers.DepartmentController;
 import controllers.EventController;
 import controllers.ReimbursementController;
 import controllers.UserController;
 import io.javalin.Javalin;
-import io.javalin.http.HttpCode;
 import static io.javalin.apibuilder.ApiBuilder.*;
 public class TrmsApp {
 
@@ -26,9 +11,9 @@ public class TrmsApp {
 		
 		Javalin app = Javalin.create(config -> {
 		    config.enableCorsForAllOrigins();
-		});
-		app.start(8085);
-		UserService userService = new UserServiceImpl();
+		}).start(8085);
+		
+		//UserService userService = new UserServiceImpl();
 		
 		/*app.post("/depts", ctx -> {
 			Department dept = ctx.bodyAsClass(com.trms.models.Department.class);
