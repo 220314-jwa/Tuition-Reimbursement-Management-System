@@ -12,4 +12,16 @@ public class ReimbursementServiceImpl implements ReimbursementService{
 		return requestDAO.create(reimbursement);
 	}
 
+	
+	@Override
+	public void updateReimbursement(Reimbursement reimbursement) {
+		// TODO Auto-generated method stub
+		 Reimbursement request = requestDAO.getById(reimbursement.getRequestId());
+		 
+		 if(reimbursement.getStatusId()!=request.getStatusId()) {
+			 request.setStatusId(reimbursement.getStatusId());
+		 }
+		 requestDAO.update(request);
+	}
+
 }
