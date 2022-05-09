@@ -1,16 +1,3 @@
-# Java with Automation Foundations Project
-
-For this project, you will be creating a full-stack application. There will be two different primary deadlines:
-
-- **April 6th** Back end unit tests complete, at least 3 endpoints functional
-- **April 15th** Final deadline including front end
-
-The biggest priority for this application is testing! If you have everything working but you have not completed the testing requirements (JUnit, Mockito, Selenium), you **DO NOT** have a sufficient project. When considering how you want to manage your time, make sure that you will have your tests completed either early or as you go.
-
-## About the Application
-
-You will be creating one of these two applications:
-
 ### TRMS: Tuition Reimbursement Management System
 
 Tuition Reimbursement Management System is an application which allows employees at a company to submit requests for reimbursement. If the employee decides to take a certification exam or attend a class, the company may reimburse them for the cost after they submit a request. Managers can then go into the application and approve or reject requests.
