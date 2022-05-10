@@ -25,7 +25,7 @@ Tuition Reimbursement Management System is an application which allows employees
 
 ## Getting Started
 
-1. git clone https://github.com/220314-jwa/p1-RustemCoder.git
+1. git clone https://github.com/220314-jwa/Tuition-Reimbursement-Management-System.git
 2. Install  Postgresql 14 from https://www.postgresql.org/
 3. Install the Java 18 from https://www.java.com
 4. Install Eclipse https://www.eclipse.org/
