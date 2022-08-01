@@ -7,6 +7,7 @@ Tuition Reimbursement Management System is an application which allows employees
 ## Technologies Used
 
 * Java - version 18
+* Javalin
 * JavaScript - version Es12
 * Bootstrap - version 5
 * Html - version html5
